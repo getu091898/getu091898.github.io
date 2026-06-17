@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getinet Belayneh — Developer & Visionary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ────────────────────────────────────────────── */
+    :root {
+      --bg:        #0A0E17;
+      --surface:   #111827;
+      --card:      #161D2E;
+      --border:    #1E2A40;
+      --accent:    #38BDF8;   /* sky blue */
+      --gold:      #F59E0B;   /* amber */
+      --text:      #E2E8F0;
+      --muted:     #64748B;
+      --serif:     'DM Serif Display', Georgia, serif;
+      --sans:      'Space Grotesk', system-ui, sans-serif;
+    }
+
+    /* ── RESET ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── NOISE OVERLAY ─────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ───────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 5%;
+      background: rgba(10,14,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+    }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ──────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 5% 5rem;
+      overflow: hidden;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(56,189,248,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%);
+      top: 10%; left: -10%;
+      animation: pulse 6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50%       { transform: scale(1.1); opacity: 1; }
+    }
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      position: relative;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 40px; height: 1px;
+      background: var(--accent);
+    }
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 9vw, 7rem);
+      line-height: 1.0;
+      letter-spacing: -2px;
+      color: var(--text);
+      position: relative;
+    }
+    .hero-name span { color: var(--accent); font-style: italic; }
+    .hero-tagline {
+      margin-top: 1.5rem;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--muted);
+      max-width: 540px;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 0.375rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0A0E17;
+    }
+    .btn-primary:hover { background: #7DD3FC; transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* ── STATS BAR ─────────────────────────────────────────── */
+    .stats-bar {
+      position: relative;
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      margin-top: 4rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      color: var(--gold);
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.1rem;
+    }
+
+    /* ── SECTION SHELL ─────────────────────────────────────── */
+    section { position: relative; z-index: 1; padding: 6rem 5%; }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.15;
+      color: var(--text);
+      max-width: 640px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── ABOUT ─────────────────────────────────────────────── */
+    #about { background: var(--surface); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-body p {
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 1rem;
+      font-weight: 300;
+    }
+    .about-body p strong { color: var(--text); font-weight: 600; }
+    .school-badge {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.6rem 1.2rem;
+      background: rgba(56,189,248,0.08);
+      border: 1px solid rgba(56,189,248,0.2);
+      border-radius: 2rem;
+      font-size: 0.82rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .skill-pill {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .skill-pill:hover { border-color: var(--accent); transform: translateX(4px); }
+    .skill-pill .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0;
+    }
+
+    /* ── PORTFOLIO ─────────────────────────────────────────── */
+    #portfolio { background: var(--bg); }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 60px rgba(56,189,248,0.08);
+    }
+    .card-thumb {
+      height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-thumb::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, var(--card));
+    }
+    .card-body { padding: 1.5rem; }
+    .card-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .card-title {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+    .card-status {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      margin-top: 1rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 2rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(56,189,248,0.1);
+      color: var(--accent);
+      border: 1px solid rgba(56,189,248,0.2);
+    }
+    .card-status .blink {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      animation: blink 1.5s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    /* ── WHY HIRE ME ───────────────────────────────────────── */
+    #hire { background: var(--surface); }
+    .hire-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .hire-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 2rem;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .hire-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+    .hire-icon {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+    }
+    .hire-card h3 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+    }
+    .hire-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .pitch-banner {
+      margin-top: 3rem;
+      padding: 3rem;
+      background: linear-gradient(135deg, rgba(56,189,248,0.06), rgba(245,158,11,0.06));
+      border: 1px solid rgba(56,189,248,0.15);
+      border-radius: 1.25rem;
+      text-align: center;
+    }
+    .pitch-banner h3 {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .pitch-banner h3 em { color: var(--accent); font-style: italic; }
+    .pitch-banner p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 2rem;
+      font-weight: 300;
+      line-height: 1.75;
+    }
+
+    /* ── CONTACT ───────────────────────────────────────────── */
+    #contact {
+      background: var(--bg);
+      text-align: center;
+    }
+    #contact .section-title { margin-left: auto; margin-right: auto; text-align: center; }
+    .contact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+    .contact-card {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.2rem 2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      transition: all 0.2s;
+      min-width: 260px;
+    }
+    .contact-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(56,189,248,0.08);
+    }
+    .contact-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    .contact-info {}
+    .contact-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .contact-value {
+      font-size: 0.92rem;
+      color: var(--text);
+      font-weight: 500;
+      word-break: break-all;
+    }
+    .contact-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 420px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    /* ── FOOTER ────────────────────────────────────────────── */
+    footer {
+      padding: 2rem 5%;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer p { font-size: 0.82rem; color: var(--muted); }
+    footer .footer-accent { color: var(--accent); font-weight: 600; }
+
+    /* ── SCROLL ANIMATIONS ─────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { display: none; }
+      .stats-bar { gap: 2rem; }
+      .contact-card { min-width: 100%; }
+      footer { flex-direction: column; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">G.B.</span>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#hire">Why Me</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+
+    <div class="hero-eyebrow">ETN Learn · Vibe Coding 101 · Homework Project</div>
+
+    <h1 class="hero-name">
+      Getinet<br><span>Belayneh</span>
+    </h1>
+
+    <p class="hero-tagline">
+      Aspiring developer turning curiosity into code —
+      one project at a time. Building the future from Addis Ababa.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#portfolio" class="btn btn-primary">View My Work ↓</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num">101</div>
+        <div class="stat-label">Vibe Coding Course</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Ideas in Queue</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1st</div>
+        <div class="stat-label">Live Website 🚀</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid reveal">
+      <div class="about-body">
+        <div class="section-label">About Me</div>
+        <h2 class="section-title">A student with a builder's mindset</h2>
+
+        <div class="school-badge">
+          🎓 ETN Learn — Vibe Coding 101
+        </div>
+
+        <p>
+          Hi! I'm <strong>Getinet Belayneh</strong>, a student currently enrolled in 
+          <strong>ETN Learn's Vibe Coding 101</strong> program. This page was created 
+          as a homework project — but I'm treating it like a real product launch.
+        </p>
+        <p>
+          I believe that writing code is one of the most powerful skills in the modern 
+          world. Every line is a decision, every project is a story, and every deployment 
+          is proof that ideas can become reality.
+        </p>
+        <p>
+          I'm based in <strong>Addis Ababa, Ethiopia</strong>, and I'm excited to be 
+          part of the next generation of African tech builders.
+        </p>
+      </div>
+
+      <div>
+        <div class="section-label" style="margin-bottom:1rem;">Skills I'm Building</div>
+        <div class="skills-grid">
+          <div class="skill-pill"><span class="dot"></span> HTML & CSS</div>
+          <div class="skill-pill"><span class="dot"></span> JavaScript</div>
+          <div class="skill-pill"><span class="dot"></span> GitHub</div>
+          <div class="skill-pill"><span class="dot"></span> AI Tools</div>
+          <div class="skill-pill"><span class="dot"></span> Vibe Coding</div>
+          <div class="skill-pill"><span class="dot"></span> Problem Solving</div>
+          <div class="skill-pill"><span class="dot"></span> Web Design</div>
+          <div class="skill-pill"><span class="dot"></span> Deployment</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="section-label reveal">Portfolio</div>
+    <h2 class="section-title reveal">Projects I'm proud of</h2>
+
+    <div class="portfolio-grid">
+
+      <div class="project-card reveal">
+        <div class="card-thumb" style="background:linear-gradient(135deg,#0F2027,#203A43,#2C5364);">🌐</div>
+        <div class="card-body">
+          <div class="card-tag">Web Development</div>
+          <div class="card-title">This Portfolio Page</div>
+          <p class="card-desc">My very first deployed website — designed with intention, hosted on GitHub Pages, and built for ETN Learn's Vibe Coding 101.</p>
+          <div class="card-status"><span class="blink"></span> Live on GitHub Pages</div>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="card-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);">📱</div>
+        <div class="card-body">
+          <div class="card-tag">Mobile App · Coming Soon</div>
+          <div class="card-title">Community Connect</div>
+          <p class="card-desc">A concept app for connecting local Ethiopian communities — sharing events, resources, and opportunities in one place.</p>
+          <div class="card-status"><span class="blink"></span> In Planning</div>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="card-thumb" style="background:linear-gradient(135deg,#0d1117,#161b22,#21262d);">🤖</div>
+        <div class="card-body">
+          <div class="card-tag">AI Project · Concept</div>
+          <div class="card-title">AI Study Buddy</div>
+          <p class="card-desc">A smart assistant tool for students to get help with homework, practice problems, and study plans — powered by AI.</p>
+          <div class="card-status"><span class="blink"></span> Concept Stage</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHY HIRE ME -->
+  <section id="hire">
+    <div class="section-label reveal">Why Work With Me</div>
+    <h2 class="section-title reveal">Not just another student — a future teammate you'll want early.</h2>
+
+    <div class="hire-grid">
+      <div class="hire-card reveal">
+        <div class="hire-icon">🔥</div>
+        <h3>Genuine Passion</h3>
+        <p>I don't code to check a box. I code because building things from nothing into something real is genuinely exciting to me. That energy shows in my work.</p>
+      </div>
+      <div class="hire-card reveal">
+        <div class="hire-icon">⚡</div>
+        <h3>Fast Learner</h3>
+        <p>I went from zero to deploying a live website in one course. Give me a challenge and a deadline, and I'll find a way. Curiosity is my superpower.</p>
+      </div>
+      <div class="hire-card reveal">
+        <div class="hire-icon">🤝</div>
+        <h3>Collaborative Spirit</h3>
+        <p>Great products are built by great teams. I listen, communicate, and always bring a positive mindset to group work and feedback sessions.</p>
+      </div>
+      <div class="hire-card reveal">
+        <div class="hire-icon">🌍</div>
+        <h3>Unique Perspective</h3>
+        <p>As a developer from Ethiopia, I bring fresh eyes to user experience and problem-solving — especially for products that need to serve diverse, global users.</p>
+      </div>
+    </div>
+
+    <div class="pitch-banner reveal">
+      <h3>The real question isn't <em>"Is Getinet ready?"</em><br>It's "How fast can we grow together?"</h3>
+      <p>I'm at the beginning of my journey, but beginnings are where the most exciting growth happens. Hire me early, invest in my learning, and you'll have a loyal, skilled builder for years to come.</p>
+      <a href="#contact" class="btn btn-primary">Let's Talk →</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label reveal">Contact</div>
+    <h2 class="section-title reveal">Let's build something together.</h2>
+
+    <div class="contact-grid reveal">
+      <div class="contact-card">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-info">
+          <div class="contact-label">Email</div>
+          <div class="contact-value">Getinet1223@gmail.com</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">✈️</div>
+        <div class="contact-info">
+          <div class="contact-label">Telegram</div>
+          <div class="contact-value">@Getu0912</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <div class="contact-info">
+          <div class="contact-label">Location</div>
+          <div class="contact-value">Addis Ababa, Ethiopia 🇪🇹</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="contact-sub reveal">
+      I'm open to internships, collaborations, freelance projects, and mentorship opportunities. Don't hesitate to reach out!
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 <span class="footer-accent">Getinet Belayneh</span> — All rights reserved.</p>
+    <p>Built for <span class="footer-accent">ETN Learn · Vibe Coding 101</span> Homework · Hosted on GitHub Pages</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
