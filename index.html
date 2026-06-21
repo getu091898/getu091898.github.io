@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Getinet Belayneh — Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ─── Reset ─────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:#F5F5F3;
+  color:#111;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+img{max-width:100%;display:block}
+
+/* ─── NAV ────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:64px;
+  background:rgba(245,245,243,.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.07);
+}
+.nav-logo{
+  font-weight:800;font-size:1rem;letter-spacing:-.02em;
+}
+.nav-logo span{color:#A855F7}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-size:.85rem;font-weight:500;color:#555;transition:color .2s}
+.nav-links a:hover{color:#111}
+.nav-btn{
+  padding:.5rem 1.25rem;
+  background:#111;color:#fff;
+  border-radius:999px;
+  font-size:.83rem;font-weight:600;
+  transition:background .2s,transform .2s;
+}
+.nav-btn:hover{background:#333;transform:translateY(-1px)}
+
+/* ─── PAGE WRAPPER ───────────────────────────────── */
+.page{max-width:1140px;margin:0 auto;padding:88px 24px 60px}
+
+/* ─── BENTO GRID ─────────────────────────────────── */
+.bento{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  grid-auto-rows:auto;
+  gap:16px;
+}
+
+/* ─── BASE CARD ──────────────────────────────────── */
+.card{
+  background:#fff;
+  border-radius:24px;
+  padding:32px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.05);
+  transition:transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 32px rgba(0,0,0,.12);
+}
+
+/* ─── HERO CARD ──────────────────────────────────── */
+.card-hero{
+  grid-column:span 5;
+  background:linear-gradient(160deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%);
+  color:#fff;
+  padding:40px;
+  min-height:420px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.card-hero .blob{
+  position:absolute;top:-80px;right:-80px;
+  width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(168,85,247,.5),rgba(236,72,153,.3),transparent 70%);
+  filter:blur(40px);pointer-events:none;
+}
+.card-hero .blob2{
+  position:absolute;bottom:-60px;left:-40px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(20,184,166,.4),transparent 70%);
+  filter:blur(35px);pointer-events:none;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 14px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:999px;
+  font-size:.72rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:#fff;
+  margin-bottom:20px;width:fit-content;
+}
+.hero-tag .dot{width:6px;height:6px;border-radius:50%;background:#A855F7;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+.card-hero h1{
+  font-size:clamp(2rem,4vw,3rem);font-weight:800;
+  line-height:1.05;letter-spacing:-.03em;margin-bottom:10px;
+}
+.card-hero h1 em{font-style:normal;color:#C084FC}
+.card-hero p{font-size:.9rem;color:rgba(255,255,255,.6);max-width:300px;line-height:1.7;margin-bottom:24px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+.h-btn{
+  padding:.6rem 1.4rem;border-radius:999px;
+  font-size:.82rem;font-weight:700;cursor:pointer;
+  transition:all .2s;border:none;
+}
+.h-btn-white{background:#fff;color:#111}
+.h-btn-white:hover{background:#f0f0f0;transform:scale(1.03)}
+.h-btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.h-btn-ghost:hover{background:rgba(255,255,255,.2)}
+
+/* ─── PROFILE CARD ───────────────────────────────── */
+.card-profile{
+  grid-column:span 3;
+  background:linear-gradient(170deg,#F3E8FF 0%,#FAE8FF 50%,#FDF4FF 100%);
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;
+  padding:36px 24px;gap:0;min-height:420px;
+}
+.avatar-ring{
+  width:110px;height:110px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#A855F7,#EC4899,#F97316);
+  padding:3px;margin-bottom:18px;
+  flex-shrink:0;
+}
+.avatar-inner{
+  width:100%;height:100%;border-radius:50%;
+  background:linear-gradient(135deg,#7C3AED,#A855F7);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.8rem;font-weight:800;color:#fff;
+  letter-spacing:-.05em;
+}
+.card-profile h2{font-size:1.15rem;font-weight:800;margin-bottom:4px}
+.card-profile .role{
+  font-size:.78rem;font-weight:600;color:#A855F7;
+  background:#EDE9FE;padding:3px 10px;border-radius:999px;
+  margin-bottom:14px;margin-top:4px;
+}
+.card-profile .location{
+  font-size:.78rem;color:#888;display:flex;align-items:center;gap:4px;
+  justify-content:center;margin-bottom:18px;
+}
+.social-row{display:flex;gap:8px;justify-content:center;margin-top:4px}
+.s-btn{
+  width:36px;height:36px;border-radius:12px;
+  background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.08);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;transition:transform .2s,box-shadow .2s;
+}
+.s-btn:hover{transform:scale(1.1);box-shadow:0 4px 16px rgba(0,0,0,.14)}
+
+/* ─── SCHOOL CARD ────────────────────────────────── */
+.card-school{
+  grid-column:span 4;
+  background:linear-gradient(135deg,#FFF7ED,#FFEDD5);
+  padding:28px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.school-icon{font-size:2rem;margin-bottom:12px}
+.card-school h3{font-size:1rem;font-weight:800;margin-bottom:6px}
+.card-school p{font-size:.82rem;color:#92400E;line-height:1.6}
+.school-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:16px;padding:6px 14px;
+  background:#F97316;color:#fff;border-radius:999px;
+  font-size:.72rem;font-weight:700;letter-spacing:.04em;
+  width:fit-content;
+}
+
+/* ─── SKILLS CARD ────────────────────────────────── */
+.card-skills{
+  grid-column:span 5;
+  padding:28px;
+}
+.card-skills h3{font-size:.85rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.08em;margin-bottom:18px}
+.skills-wrap{display:flex;flex-wrap:wrap;gap:8px}
+.skill-pill{
+  padding:7px 16px;border-radius:999px;
+  font-size:.78rem;font-weight:700;
+  transition:transform .2s;cursor:default;
+}
+.skill-pill:hover{transform:scale(1.06)}
+.pill-purple{background:#EDE9FE;color:#7C3AED}
+.pill-pink  {background:#FCE7F3;color:#BE185D}
+.pill-blue  {background:#DBEAFE;color:#1D4ED8}
+.pill-green {background:#D1FAE5;color:#065F46}
+.pill-orange{background:#FFEDD5;color:#C2410C}
+.pill-teal  {background:#CCFBF1;color:#0F766E}
+.pill-red   {background:#FEE2E2;color:#B91C1C}
+.pill-indigo{background:#E0E7FF;color:#3730A3}
+
+/* ─── STATS CARD ─────────────────────────────────── */
+.card-stats{
+  grid-column:span 3;
+  background:#111;color:#fff;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;padding:0;overflow:hidden;
+}
+.stat-cell{
+  padding:24px 20px;
+  display:flex;flex-direction:column;
+  border-right:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.stat-cell:nth-child(2){border-right:none}
+.stat-cell:nth-child(3){border-bottom:none}
+.stat-cell:nth-child(4){border-right:none;border-bottom:none}
+.stat-num{font-size:2rem;font-weight:800;letter-spacing:-.04em;color:#C084FC;margin-bottom:4px}
+.stat-lbl{font-size:.72rem;color:rgba(255,255,255,.45);line-height:1.4}
+
+/* ─── AVAILABILITY CARD ──────────────────────────── */
+.card-avail{
+  grid-column:span 4;
+  background:linear-gradient(135deg,#ECFDF5,#D1FAE5);
+  padding:28px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.avail-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.avail-dot{
+  width:12px;height:12px;border-radius:50%;
+  background:#10B981;
+  box-shadow:0 0 0 4px rgba(16,185,129,.2);
+  animation:pulse 2s infinite;
+}
+.avail-top span{font-size:.85rem;font-weight:700;color:#065F46}
+.card-avail h3{font-size:1.1rem;font-weight:800;color:#064E3B;margin-bottom:8px}
+.card-avail p{font-size:.82rem;color:#047857;line-height:1.6}
+.avail-btn{
+  margin-top:18px;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:.6rem 1.2rem;
+  background:#10B981;color:#fff;
+  border-radius:999px;font-size:.8rem;font-weight:700;
+  width:fit-content;transition:background .2s,transform .2s;
+}
+.avail-btn:hover{background:#059669;transform:scale(1.03)}
+
+/* ─── PORTFOLIO CARD ─────────────────────────────── */
+.card-portfolio{
+  grid-column:span 8;
+  padding:32px;
+}
+.section-label{
+  font-size:.75rem;font-weight:700;color:#aaa;
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px;
+}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.proj{
+  background:#F5F5F3;border-radius:16px;padding:18px;
+  transition:transform .25s,background .25s;cursor:pointer;
+}
+.proj:hover{background:#EFEFED;transform:translateY(-3px)}
+.proj-icon{
+  width:40px;height:40px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;margin-bottom:12px;
+}
+.pi-purple{background:#EDE9FE}
+.pi-pink  {background:#FCE7F3}
+.pi-blue  {background:#DBEAFE}
+.pi-green {background:#D1FAE5}
+.pi-orange{background:#FFEDD5}
+.pi-teal  {background:#CCFBF1}
+.proj h4{font-size:.85rem;font-weight:700;margin-bottom:4px}
+.proj p {font-size:.75rem;color:#888;line-height:1.5}
+
+/* ─── CONTACT CARD ───────────────────────────────── */
+.card-contact{
+  grid-column:span 4;
+  background:linear-gradient(135deg,#1E1B4B,#312E81,#1E1B4B);
+  color:#fff;padding:32px;
+}
+.card-contact .blob{
+  position:absolute;top:-60px;right:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(168,85,247,.4),transparent 70%);
+  filter:blur(30px);pointer-events:none;
+}
+.card-contact h3{font-size:1.3rem;font-weight:800;margin-bottom:8px}
+.card-contact p{font-size:.83rem;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:20px}
+.contact-item{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 14px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;
+  margin-bottom:8px;
+  font-size:.82rem;
+}
+.contact-item .ci-ico{font-size:1rem;width:20px;text-align:center}
+.contact-item a{color:#C084FC;font-weight:600}
+.contact-item a:hover{color:#DDB6FC}
+
+/* ─── HIRE CARD ──────────────────────────────────── */
+.card-hire{
+  grid-column:span 7;
+  padding:32px;
+}
+.hire-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.hire-item{
+  background:#F5F5F3;border-radius:16px;padding:18px;
+  transition:transform .25s;
+}
+.hire-item:hover{transform:translateY(-3px)}
+.hire-icon{font-size:1.5rem;margin-bottom:8px}
+.hire-item h4{font-size:.85rem;font-weight:700;margin-bottom:4px}
+.hire-item p{font-size:.75rem;color:#888;line-height:1.55}
+
+/* ─── QUOTE CARD ─────────────────────────────────── */
+.card-quote{
+  grid-column:span 5;
+  background:linear-gradient(135deg,#FDF2F8,#FCE7F3,#FFF0F6);
+  padding:36px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.quote-mark{font-size:4rem;line-height:.8;color:#F9A8D4;font-family:Georgia,serif;margin-bottom:8px}
+.card-quote blockquote{
+  font-size:1.1rem;font-weight:700;color:#831843;
+  line-height:1.6;font-style:italic;margin-bottom:16px;
+}
+.card-quote cite{font-size:.78rem;color:#BE185D;font-weight:600;font-style:normal}
+
+/* ─── TECH STACK CARD ────────────────────────────── */
+.card-stack{
+  grid-column:span 5;
+  padding:28px;
+}
+.stack-items{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.stack-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;background:#F5F5F3;border-radius:12px;
+  font-size:.82rem;font-weight:600;
+  transition:background .2s;
+}
+.stack-item:hover{background:#EEEEEC}
+.s-ico{font-size:1.2rem}
+
+/* ─── FOOTER CARD ────────────────────────────────── */
+.card-footer{
+  grid-column:span 12;
+  background:#111;color:#fff;
+  padding:32px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-radius:24px;
+  flex-wrap:wrap;gap:16px;
+}
+.footer-left .logo{font-size:1.1rem;font-weight:800;margin-bottom:4px}
+.footer-left .logo span{color:#A855F7}
+.footer-left p{font-size:.8rem;color:rgba(255,255,255,.4)}
+.footer-right{font-size:.8rem;color:rgba(255,255,255,.35);text-align:right}
+.footer-right strong{color:rgba(255,255,255,.6)}
+
+/* ─── Reveal ─────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ─── Responsive ─────────────────────────────────── */
+@media(max-width:900px){
+  .card-hero,.card-profile,.card-school,.card-skills,.card-stats,
+  .card-avail,.card-portfolio,.card-contact,.card-hire,.card-quote,
+  .card-stack{grid-column:span 12}
+  .projects-grid{grid-template-columns:1fr 1fr}
+  .hire-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+}
+@media(max-width:560px){
+  .projects-grid,.hire-grid,.stack-items{grid-template-columns:1fr}
+  .card-stats{grid-template-columns:1fr 1fr}
+  .page{padding-top:80px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">getinet<span>.</span>dev</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#portfolio">Work</a>
+    <a href="#hire">Why Me</a>
+    <a href="#contact" class="nav-btn">Hire Me</a>
+  </div>
+</nav>
+
+<div class="page">
+<div class="bento">
+
+  <!-- HERO -->
+  <div class="card card-hero reveal" id="about">
+    <div class="blob"></div>
+    <div class="blob2"></div>
+    <div class="hero-tag"><span class="dot"></span> Available for hire</div>
+    <h1>Building the<br /><em>Web</em> That<br />Matters.</h1>
+    <p>Full Stack Developer crafting fast, beautiful, and scalable digital products from Addis Ababa to the world.</p>
+    <div class="hero-actions">
+      <a href="#portfolio" class="h-btn h-btn-white">View Work →</a>
+      <a href="#contact" class="h-btn h-btn-ghost">Contact Me</a>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="card card-profile reveal">
+    <div class="avatar-ring">
+      <div class="avatar-inner">GB</div>
+    </div>
+    <h2>Getinet Belayneh</h2>
+    <div class="role">Full Stack Developer</div>
+    <div class="location">📍 Addis Ababa, Ethiopia</div>
+    <div class="social-row">
+      <a class="s-btn" href="mailto:Getinet1223@gmail.com" title="Email">✉️</a>
+      <a class="s-btn" href="https://t.me/Getu0912" target="_blank" title="Telegram">✈️</a>
+      <a class="s-btn" href="#" title="GitHub">🐙</a>
+      <a class="s-btn" href="#" title="LinkedIn">💼</a>
+    </div>
+  </div>
+
+  <!-- SCHOOL -->
+  <div class="card card-school reveal">
+    <div class="school-icon">🎓</div>
+    <h3>ETN Learn — Vibe Coding 101</h3>
+    <p>Currently enrolled and building real-world projects as part of this course. This page is my first GitHub Pages deployment assignment!</p>
+    <div class="school-chip">📚 Homework Project</div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="card card-skills reveal" id="skills">
+    <h3>Tech Skills</h3>
+    <div class="skills-wrap">
+      <span class="skill-pill pill-purple">React</span>
+      <span class="skill-pill pill-blue">Next.js</span>
+      <span class="skill-pill pill-green">Node.js</span>
+      <span class="skill-pill pill-orange">Python</span>
+      <span class="skill-pill pill-teal">PostgreSQL</span>
+      <span class="skill-pill pill-pink">MongoDB</span>
+      <span class="skill-pill pill-indigo">TypeScript</span>
+      <span class="skill-pill pill-red">Docker</span>
+      <span class="skill-pill pill-purple">GraphQL</span>
+      <span class="skill-pill pill-blue">AWS</span>
+      <span class="skill-pill pill-green">Redis</span>
+      <span class="skill-pill pill-orange">Express.js</span>
+      <span class="skill-pill pill-teal">Git & GitHub</span>
+      <span class="skill-pill pill-pink">REST APIs</span>
+      <span class="skill-pill pill-indigo">Tailwind CSS</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="card card-stats reveal">
+    <div class="stat-cell">
+      <div class="stat-num">20+</div>
+      <div class="stat-lbl">Projects Shipped</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">3+</div>
+      <div class="stat-lbl">Years Coding</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">100%</div>
+      <div class="stat-lbl">Satisfaction</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">∞</div>
+      <div class="stat-lbl">Curiosity</div>
+    </div>
+  </div>
+
+  <!-- AVAILABILITY -->
+  <div class="card card-avail reveal">
+    <div>
+      <div class="avail-top"><div class="avail-dot"></div><span>Open to Opportunities</span></div>
+      <h3>Let's work together</h3>
+      <p>Freelance, full-time roles, or long-term contracts — I'm actively looking for the next great project.</p>
+    </div>
+    <a href="mailto:Getinet1223@gmail.com" class="avail-btn">✉️ Email Me Now</a>
+  </div>
+
+  <!-- PORTFOLIO -->
+  <div class="card card-portfolio reveal" id="portfolio">
+    <div class="section-label">Portfolio — Selected Work</div>
+    <div class="projects-grid">
+      <div class="proj">
+        <div class="proj-icon pi-purple">🛒</div>
+        <h4>ShopFlow</h4>
+        <p>Full-stack e-commerce with Stripe, real-time inventory &amp; admin panel.</p>
+      </div>
+      <div class="proj">
+        <div class="proj-icon pi-blue">💬</div>
+        <h4>ChatNest</h4>
+        <p>Real-time WebSocket messaging app with E2E encryption.</p>
+      </div>
+      <div class="proj">
+        <div class="proj-icon pi-green">📊</div>
+        <h4>DataPulse</h4>
+        <p>Analytics dashboard with D3 charts and multi-tenant SaaS.</p>
+      </div>
+      <div class="proj">
+        <div class="proj-icon pi-pink">🔐</div>
+        <h4>AuthGuard</h4>
+        <p>OAuth 2.0 microservice with MFA, audit logs &amp; rate limiting.</p>
+      </div>
+      <div class="proj">
+        <div class="proj-icon pi-orange">🌍</div>
+        <h4>LocalBridge</h4>
+        <p>PWA community app with offline support and geolocation.</p>
+      </div>
+      <div class="proj">
+        <div class="proj-icon pi-teal">🤖</div>
+        <h4>AI Studio</h4>
+        <p>LLM-powered writing assistant with team collaboration.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="card card-contact reveal" id="contact">
+    <div class="blob"></div>
+    <h3>Ready to build<br />something great?</h3>
+    <p>Drop me a line — I respond within 24 hours and I'm always excited to hear about new challenges.</p>
+    <div class="contact-item"><span class="ci-ico">✉️</span><div><a href="mailto:Getinet1223@gmail.com">Getinet1223@gmail.com</a></div></div>
+    <div class="contact-item"><span class="ci-ico">✈️</span><div><a href="https://t.me/Getu0912" target="_blank">@Getu0912 on Telegram</a></div></div>
+    <div class="contact-item"><span class="ci-ico">📍</span><div style="color:rgba(255,255,255,.6)">Addis Ababa, Ethiopia</div></div>
+  </div>
+
+  <!-- WHY HIRE -->
+  <div class="card card-hire reveal" id="hire">
+    <div class="section-label">Why Hire Me</div>
+    <div style="font-size:1.3rem;font-weight:800;margin-bottom:4px">I don't just write code —<br />I build products that work.</div>
+    <div class="hire-grid">
+      <div class="hire-item">
+        <div class="hire-icon">🎯</div>
+        <h4>Full-Stack Ownership</h4>
+        <p>Database to UI — I own every layer and think in complete systems.</p>
+      </div>
+      <div class="hire-item">
+        <div class="hire-icon">🚀</div>
+        <h4>Ship Fast, Ship Clean</h4>
+        <p>Tested, documented code your future team will love, not dread.</p>
+      </div>
+      <div class="hire-item">
+        <div class="hire-icon">🤝</div>
+        <h4>True Collaboration</h4>
+        <p>Clear comms, proactive updates — I work with you, not just for you.</p>
+      </div>
+      <div class="hire-item">
+        <div class="hire-icon">📈</div>
+        <h4>Built to Scale</h4>
+        <p>Architecture today that won't become technical debt tomorrow.</p>
+      </div>
+      <div class="hire-item">
+        <div class="hire-icon">🔒</div>
+        <h4>Security-First</h4>
+        <p>Auth, validation, OWASP top 10 — security is always built in.</p>
+      </div>
+      <div class="hire-item">
+        <div class="hire-icon">💡</div>
+        <h4>Problem Thinker</h4>
+        <p>I reach for the right tool, not the shiniest one.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="card card-quote reveal">
+    <div class="quote-mark">"</div>
+    <blockquote>Great software is built by developers who care as much about the why as the how.</blockquote>
+    <cite>— Getinet Belayneh, Full Stack Developer</cite>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="card card-stack reveal">
+    <div class="section-label">Daily Tech Stack</div>
+    <div class="stack-items">
+      <div class="stack-item"><span class="s-ico">⚛️</span> React / Next.js</div>
+      <div class="stack-item"><span class="s-ico">🟩</span> Node.js / Express</div>
+      <div class="stack-item"><span class="s-ico">🐘</span> PostgreSQL</div>
+      <div class="stack-item"><span class="s-ico">🐍</span> Python / Django</div>
+      <div class="stack-item"><span class="s-ico">🐳</span> Docker / AWS</div>
+      <div class="stack-item"><span class="s-ico">🔷</span> TypeScript</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="card-footer reveal">
+    <div class="footer-left">
+      <div class="logo">getinet<span>.</span>dev</div>
+      <p>Full Stack Developer · ETN Learn Vibe Coding 101 · Homework Project</p>
+    </div>
+    <div class="footer-right">
+      <strong>Getinet Belayneh</strong><br />
+      Addis Ababa, Ethiopia<br />
+      Crafted with ♥ in HTML, CSS &amp; JS
+    </div>
+  </div>
+
+</div><!-- /bento -->
+</div><!-- /page -->
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }
+  });
+}, {threshold:.1});
+document.querySelectorAll('.reveal').forEach((el,i) => {
+  el.style.transitionDelay = (i * 60) + 'ms';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
